@@ -9,6 +9,7 @@ import '../../home/blocs/home_event.dart';
 import '../../home/blocs/home_state.dart';
 import '../../home/widgets/main_app_bar.dart';
 import '../widgets/course_item.dart';
+import '../widgets/course_item_shimmer.dart';
 import '../widgets/filter_bottom_sheet.dart';
 
 class CoursesView extends StatelessWidget {
@@ -22,7 +23,19 @@ class CoursesView extends StatelessWidget {
           case HomeStatus.error:
             return Scaffold(body: Center(child: Text("Something went wrong")));
           case HomeStatus.loading:
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: MainAppBar(title: "Kurslar 📚", icon: '', callback: () { },),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: ListView.builder(
+                itemCount: 6,
+                itemBuilder: (_, __) => const CourseItemShimmer(),
+              ),
+            ),
+            bottomNavigationBar: AppBottomNavigationBar(),
+          );
+
           case HomeStatus.idle:
             if (state.courses.isEmpty) {
               return Scaffold(
